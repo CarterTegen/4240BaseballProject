@@ -1,0 +1,49 @@
+------------------------- Pitch Types -------------------------
+----- Unchanged -----
+CH: Changeup
+CU: Curveball
+FC: Cutter
+FF: Four-seam fastball
+FS: Splitter
+FT: Two-seam fastball
+KC: Knuckle curve
+KN: Knuckleball
+SC: Screwball
+SI: Sinker
+SL: Slider
+
+----- Removed -----
+UN: Unknown -> Remove (doesn't appear)
+FO: Pitchout -> Remove, low count (n=727). Also, not applicable to general pitcher strategy.
+IN: Intentional ball -> Remove, low count (n=238) Also, not applicable to general pitcher strategy.
+PO: Pitchout -> Remove, low count (n=226) Also, not applicable to general pitcher strategy.
+EP: Eephus -> Remove, low count (n=77)
+AB: ?? -> Remove, low count (n=6)
+FA: ?? -> Remove, low count (n=9)
+
+------------------------- Code Types -------------------------
+----- Unchanged -----
+B: Ball
+S: Swinging Strike
+C: Called Strike
+F: Foul
+T: Foul Tip
+L: Foul Bunt
+W: Swinging Strike (Blocked)
+M: Missed Bunt
+
+Values that only occur on last pitch of at-bat:
+X: In play, out(s)
+D: In play, no out
+E: In play, runs
+H: Hit by pitch
+
+----- Modified -----
+*B: Ball in dirt -> Make "Ball"
+
+----- Removed -----
+I: Intentional Ball -> Remove, low count (n=238). Also, not applicable to general pitcher strategy.
+P: Pitchout -> Remove, low count (n=221)
+V: ?? -> Remove, no label
+Q: Swinging pitchout -> Remove, low count (n=3)
+R: Foul pitchout -> Remove, low count (n=2)
