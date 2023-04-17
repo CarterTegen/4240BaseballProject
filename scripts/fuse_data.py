@@ -22,7 +22,7 @@ EVENT_TO_DROP = ["Field Error", "Fielders Choice Out", "Intent Walk", "Fielders 
 #0 Remove only meaningless columns
 #1 For pitch/batting decision analysis
 #2 For pitch identification
-COLUMN_REMOVAL_SWITCH = 1
+COLUMN_REMOVAL_SWITCH = 3
 
 # --------------------- CONFIGURATION PRE-PROCESSING ---------------------
 COL_TO_DROP = ["type_confidence", "y0", "nasty", "event_num", "ab_id", "batter_id", \
@@ -37,6 +37,8 @@ match COLUMN_REMOVAL_SWITCH:
             "vz0", "x", "x0", "y", "z0", "pfx_x", "pfx_z", "type"]
     case 2:
         pass
+    case 3:
+        pass
     case _:
         raise ValueError("Invalid COLUMN_REMOVAL_SWITCH value")
 
@@ -45,6 +47,7 @@ OUTPUT_NAME = OUTPUT_NAME + "_C" + str(COLUMN_REMOVAL_SWITCH) + ".hdf5"
 # --------------------- DATA IMPORT ---------------------
 start_time = time.time()
 print("Loading source files")
+
 atBats = pd.read_csv("../source_files/atbats.csv")
 pitches = pd.read_csv("../source_files/pitches.csv")
 
@@ -126,10 +129,15 @@ def atBatScore(event, on_1b, on_2b, on_3b):
         case _:
             return event
 
+
 if COLUMN_REMOVAL_SWITCH == 1:
     combined_data["at_bat_score"] = [atBatScore(event, on_1b, on_2b, on_3b) 
     for event, on_1b, on_2b, on_3b 
     in zip(combined_data["event"], combined_data["on_1b"], combined_data["on_2b"], combined_data["on_3b"])]
+
+if COLUMN_REMOVAL_SWITCH == 3:
+    combined_data["pitch_event"] = [code if code not in ["X", "D", "E"] else event \
+        for code, event in zip(combined_data["code"], combined_data["event"])]
 
 print(f"At bat scores calculated, elapsed time: {elapsed:.3}s")
 print(f"Shape: {combined_data.shape}")
@@ -137,6 +145,7 @@ print(f"Shape: {combined_data.shape}")
 if EXPORT_DATA:
     print("Beginning data export")
     combined_data.to_hdf(OUTPUT_PATH + OUTPUT_NAME, key = "df")
+    print(OUTPUT_PATH + OUTPUT_NAME)
 
     elapsed = time.time() - start_time
     print(f"Export complete, Elapsed time: {elapsed:.3}s")

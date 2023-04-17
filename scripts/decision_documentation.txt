@@ -38,9 +38,6 @@ D: In play, no out
 E: In play, runs
 H: Hit by pitch
 
------ Modified -----
-*B: Ball in dirt -> Make "Ball"
-
 ----- Removed -----
 I: Intentional Ball -> Remove, low count (n=238). Also, not applicable to general pitcher strategy.
 P: Pitchout -> Remove, low count (n=221)
